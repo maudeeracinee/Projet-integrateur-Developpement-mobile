@@ -1,0 +1,55 @@
+<div class="combat-interface">
+    <span class="versus">VS</span>
+
+    <div class="countdown">{{ countdown }}</div>
+    <div class="player-combat-stats">
+        <div class="player-combat-info">
+            <p class="player-combat-name">{{ player.name }}</p>
+
+            <p class="player-combat-attack">Attaque: {{ player.specs.attack }}</p>
+            <p class="player-combat-defense">Défense: {{ player.specs.defense }}</p>
+        </div>
+        <div class="opponent-info">
+            <p class="player-combat-name">{{ opponent.name }}</p>
+
+            <p class="player-combat-attack">{{ opponent.specs.attack }} : Attaque</p>
+            <p class="player-combat-defense">{{ opponent.specs.defense }} : Défense</p>
+        </div>
+    </div>
+
+    <div class="characters-display">
+        <div class="character player1">
+            <p class="player-life">{{ player.specs.life < 0 ? 0 : player.specs.life }} PV</p>
+            <img src="./assets/characters/{{ player.avatar }}.png" alt="Player 1 avatar" />
+        </div>
+        <div class="character player2">
+            <p class="player-life">{{ opponent.specs.life < 0 ? 0 : opponent.specs.life }} PV</p>
+            <img src="./assets/characters/{{ opponent.avatar }}.png" alt="Player 2 avatar" />
+        </div>
+    </div>
+    <div class="combat-messages">
+        <p>{{ combatMessage }}</p>
+    </div>
+
+    @if(!isObserver) {
+    <div class="button-container">
+        @if(attacking) {
+        <p class="dice">{{ attackTotal }}</p>
+        } @else {
+        <p class="dice">{{ defenseTotal }}</p>
+        }
+
+        <button class="action-button" [disabled]="isItYourTurn()" (click)="attack()">Attaquer</button>
+        <button class="action-button" [disabled]="isItYourTurn()" (click)="evade()">evasion ({{ player.specs.evasions }})</button>
+        @if(attacking) {
+        <p class="dice">{{ defenseTotal }}</p>
+        } @else {
+        <p class="dice">{{ attackTotal }}</p>
+        }
+    </div>
+    }
+
+    <div class="turn-messages">
+        <p>{{ turnMessage }}</p>
+    </div>
+</div>

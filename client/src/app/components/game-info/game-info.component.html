@@ -1,0 +1,15 @@
+<div class="game-info">
+    <h2>Informations de la partie</h2>
+    <div class="info-item">
+        <p>Taille de la carte :</p>
+        <span>{{ convertMapSize(game.mapSize.x) }}</span>
+    </div>
+    <div class="info-item">
+        <p>Nombre de joueurs :</p>
+        <span>{{ totalPlayerCount }}</span>
+    </div>
+    <div class="info-item">
+        <p>Joueur Actif :</p>
+        <span>{{ currentPlayerTurn || '-' }}</span>
+    </div>
+</div>

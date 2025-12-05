@@ -1,0 +1,93 @@
+<div class="auth-flex-container">
+    <div class="auth-container auth-register" *ngIf="mode === 'register' || mode === 'both'">
+        <h2>Inscription</h2>
+        <input
+            name="registerEmail"
+            [(ngModel)]="registerEmail"
+            placeholder="Email"
+            (keydown.enter)="register()"
+            maxlength="50"
+            (input)="onInput($event, 'registerEmail')"
+        />
+        <div class="password-input-container">
+            <input
+                name="registerPassword"
+                [(ngModel)]="registerPassword"
+                placeholder="Mot de passe"
+                [type]="showRegisterPassword ? 'text' : 'password'"
+                maxlength="30"
+                (keydown.enter)="register()"
+                (input)="onInput($event, 'registerPassword')"
+            />
+            <button
+                type="button"
+                class="password-toggle"
+                (mousedown)="onRegisterPasswordMouseDown()"
+                (mouseup)="onRegisterPasswordMouseUp()"
+                (mouseleave)="onRegisterPasswordMouseUp()"
+                (touchstart)="onRegisterPasswordMouseDown()"
+                (touchend)="onRegisterPasswordMouseUp()"
+                tabindex="-1"
+            >
+                👁
+            </button>
+        </div>
+        <input
+            name="registerUsername"
+            [(ngModel)]="registerUsername"
+            placeholder="Pseudonyme"
+            maxlength="10"
+            (keydown.enter)="register()"
+            (input)="onInput($event, 'registerUsername')"
+        />
+        <span class="char-counter">{{ registerUsername.length }}/10</span>
+        <div class="profile-picture-selection">
+            <label>Choisissez une photo de profil :</label>
+            <app-profile-picture
+                [selectedProfilePicture]="registerProfilePicture"
+                [customProfilePicturePreview]="registerCustomProfilePicturePreview"
+                [showOnlyFree]="true"
+                (selectedProfilePictureChange)="registerProfilePicture = $event"
+                (customProfilePicturePreviewChange)="registerCustomProfilePicturePreview = $event"
+            ></app-profile-picture>
+        </div>
+        <button type="button" class="sign-up-button" (click)="register()">S'inscrire</button>
+        <div *ngIf="registerMessage" class="message">{{ registerMessage }}</div>
+    </div>
+    <div class="auth-container auth-login" *ngIf="mode === 'login' || mode === 'both'">
+        <h2>Connexion</h2>
+        <input
+            name="loginUsername"
+            [(ngModel)]="loginUsername"
+            placeholder="Pseudo"
+            maxlength="50"
+            (keydown.enter)="login()"
+            (input)="onInput($event, 'loginUsername')"
+        />
+        <div class="password-input-container">
+            <input
+                name="loginPassword"
+                [(ngModel)]="loginPassword"
+                placeholder="Mot de passe"
+                [type]="showLoginPassword ? 'text' : 'password'"
+                maxlength="30"
+                (keydown.enter)="login()"
+                (input)="onInput($event, 'loginPassword')"
+            />
+            <button
+                type="button"
+                class="password-toggle"
+                (mousedown)="onLoginPasswordMouseDown()"
+                (mouseup)="onLoginPasswordMouseUp()"
+                (mouseleave)="onLoginPasswordMouseUp()"
+                (touchstart)="onLoginPasswordMouseDown()"
+                (touchend)="onLoginPasswordMouseUp()"
+                tabindex="-1"
+            >
+                👁
+            </button>
+        </div>
+        <button type="button" class="login-button" (click)="login()">Se connecter</button>
+        <div *ngIf="loginMessage" class="message">{{ loginMessage }}</div>
+    </div>
+</div>

@@ -1,0 +1,189 @@
+<div class="character-page-container">
+    <div class="character-selection-container">
+        <div class="return-to-previous-page">
+            @if(isJoiningGame) {
+            <button class="return-button" (click)="onQuit()">Quitter</button>
+            } @else {
+            <button class="return-button" (click)="onReturn()">Retour</button>
+            }
+        </div>
+        <button class="chat-toggle-button" aria-label="Toggle global chat" (click)="isChatVisible = !isChatVisible">
+            <span class="material-icons">chat_bubble_outline</span>
+        </button>
+        @if (isChatVisible) {
+        <div class="global-chat-wrapper">
+            <app-chatroom [isInGame]="false" (closed)="isChatVisible = false"></app-chatroom>
+        </div>
+        }
+        <div class="left-side">
+            <div class="player-stats">
+                <div class="stats">
+                    <div class="stat">
+                        <label class="stat-label" data-title="Le nombre de points de vie du personnage."> Vie : {{ life }} PV </label>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" [style.width.%]="(life / 6) * 100"></div>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <label class="stat-label" data-title="Correspond aux points de mouvement par tour d’un personnage."
+                            >Rapidité : {{ speed }} PTS</label
+                        >
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" [style.width.%]="(speed / 6) * 100"></div>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <label class="stat-label" data-title="Représente la force avec laquelle une attaque est faite sur l’adversaire."
+                            >Attaque : {{ attack }} PTS</label
+                        >
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" [style.width.%]="(attack / 6) * 100"></div>
+                        </div>
+                    </div>
+                    <div class="stat"></div>
+                    <label class="stat-label" data-title="Représente la capacité à bloquer l’attaque d’un adversaire."
+                        >Défense : {{ defense }} PTS</label
+                    >
+                    <div class="stat-bar">
+                        <div class="stat-bar-fill" [style.width.%]="(defense / 6) * 100"></div>
+                    </div>
+                </div>
+                <div class="bonus-text">
+                    <label>Ajoutes un bonus : </label>
+                </div>
+                <div class="bonus-buttons-container">
+                    <div class="bonus-button-wrapper">
+                        <button class="bonus-button" [ngClass]="{ selected: lifeOrSpeedBonus === 'life' }" (click)="addBonus('life')">Vie</button>
+                    </div>
+                    <div class="bonus-button-wrapper">
+                        <button class="bonus-button" [ngClass]="{ selected: lifeOrSpeedBonus === 'speed' }" (click)="addBonus('speed')">
+                            Rapidité
+                        </button>
+                    </div>
+                </div>
+                <div class="bonus-text">
+                    <label>Attribues un dé à 6 faces: </label>
+                </div>
+                <div class="dice-buttons-container">
+                    <div class="dice-and-buttons-wrapper">
+                        <button class="dice-button" [ngClass]="{ selected: attackOrDefenseBonus === 'attack' }" (click)="assignDice('attack')">
+                            Attaque
+                        </button>
+
+                        <div class="dice-icon">
+                            @if (attackOrDefenseBonus) { @if(attackBonus === Bonus.D4) {
+                            <img src="./assets/icons/d4.png" alt="D4" class="dice-image" />} @else if(attackBonus === Bonus.D6) {
+                            <img src="./assets/icons/d6.png" alt="D6" class="dice-image" />} }
+                        </div>
+                    </div>
+                    <div class="dice-and-buttons-wrapper">
+                        <button class="dice-button" [ngClass]="{ selected: attackOrDefenseBonus === 'defense' }" (click)="assignDice('defense')">
+                            Défense
+                        </button>
+                        <div class="dice-icon">
+                            @if(attackOrDefenseBonus) { @if(defenseBonus === Bonus.D4) {
+                            <img src="./assets/icons/d4.png" alt="D4" class="dice-image" />
+                            } @else if(defenseBonus === Bonus.D6) {
+                            <img src="./assets/icons/d6.png" alt="D6" class="dice-image" />}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hover-explanation">
+                <span>Placez votre souris sur chacun des attributs pour voir leur description.</span>
+            </div>
+        </div>
+
+        <div class="character-display">
+            <button class="arrow-button left-arrow" (click)="previousCharacter()">&#9664;</button>
+            <div class="selected-character">
+                <h1>CHOISIS TON AVATAR</h1>
+                @if (isLoadingCharacters) {
+                <div class="loading-characters">Chargement des avatars...</div>
+                } @else if (selectedCharacter && selectedCharacter.image) {
+                <div class="character-image-container">
+                    <img
+                        [src]="selectedCharacter.image"
+                        alt="Selected Character"
+                        [class.locked-main-character]="selectedCharacter.isShopAvatar && !isShopAvatarOwned(selectedCharacter)"
+                    />
+                    @if(selectedCharacter.isShopAvatar && !isShopAvatarOwned(selectedCharacter)) {
+                    <div class="main-lock-overlay">
+                        <span class="main-lock-icon">🔒</span>
+                        <div class="lock-message">Avatar non possédé</div>
+                    </div>
+                    }
+                </div>
+                } @else {
+                <div class="no-character">Aucun avatar disponible</div>
+                }
+                <h2 class="character-name">
+                    <span> {{ name || 'Choisis ton nom' }}</span>
+                </h2>
+                @if(isJoiningGame) {
+                <button class="start-button" (click)="onSubmit()">Rejoindre la partie</button>
+                }@else {
+                <button class="start-button" (click)="onSubmit()">Créer une partie</button>
+                } @if (showCharacterNameError) {
+                <div class="error-message">Choisissez votre nom de joueur</div>
+                } @if (showBonusError) {
+                <div class="error-message">Ajoutez le bonus (+2 Vie ou Rapidité)</div>
+                } @if (showDiceError) {
+                <div class="error-message">Attribuez un dé (D6 Attaque ou Défense)</div>
+                } @if (showSelectionError) {
+                <div class="error-message">Le joueur selectionné n'est plus disponible.</div>
+                }
+            </div>
+            <button class="arrow-button right-arrow" (click)="nextCharacter()">&#9654;</button>
+        </div>
+
+        <div class="character-list-section">
+            <div class="character-list">
+                @for(character of characters; track character) {
+                <div
+                    class="character-box"
+                    (click)="selectCharacter(character)"
+                    [ngClass]="{
+                        'disabled-character': !character.isAvailable,
+                        'selected-character': character === selectedCharacter,
+                        'shop-character': character.isShopAvatar && isShopAvatarOwned(character),
+                        'locked-character': character.isShopAvatar && !isShopAvatarOwned(character)
+                    }"
+                >
+                    <img [src]="character.preview" alt="{{ character.id }}" />
+                    @if(character.isShopAvatar && !isShopAvatarOwned(character)) {
+                    <div class="lock-overlay">
+                        <span class="lock-icon">🔒</span>
+                    </div>
+                    }
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+    @if(showGameStartedModal) {
+    <div class="game-started-modal">
+        <div class="modal">
+            <h2>La partie a commencée.</h2>
+            <p>La partie a commencée sans vous, vous serez redirigé.</p>
+        </div>
+    </div>
+    } @if(showHostQuitModal) {
+    <div class="game-started-modal">
+        <div class="modal">
+            <h2>L'hôte de la partie a quitté.</h2>
+            <p>Vous serez redirigé vers le menu principal.</p>
+        </div>
+    </div>
+    } @if((gameLockedModal && !gameSettings.isDropInOut) || (gameLockedModal && gameSettings.isDropInOut && !gameHasStarted)) {
+    <div class="game-locked-modal">
+        <div class="modal">
+            <h2>La partie est verrouillée</h2>
+            <div class="modal-button">
+                <button class="modal-button" (click)="onQuit()">Menu principal</button>
+                <button class="modal-button" (click)="onSubmit()">Réessayer</button>
+            </div>
+        </div>
+    </div>
+    }
+</div>

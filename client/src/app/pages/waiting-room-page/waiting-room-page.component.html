@@ -1,0 +1,160 @@
+<body>
+    <div class="waiting-room-container">
+        <div class="player">
+            <div class="waiting-avatar-container">
+                <img [src]="playerPreview" alt="Player Avatar" />
+            </div>
+            <div class="player-name">
+                <h1>{{ playerName }}</h1>
+            </div>
+            <div class="virtual-money-display">
+                <p>Mon argent:</p>
+                <app-virtual-money [compact]="true"></app-virtual-money>
+            </div>
+            <div class="player-challenge">
+                <app-challenge></app-challenge>
+            </div>
+            @if (isHost) {
+            <div class="audio-toggles-container">
+                <div class="audio-control">
+                    <span class="status-label">Musique:</span>
+                    <button class="volume-button" aria-label="Toggle music" (click)="toggleMusic()">
+                        <span class="material-icons" aria-hidden="true">
+                            {{ (audioService.musicEnabled$ | async) ? 'music_note' : 'music_off' }}
+                        </span>
+                    </button>
+                </div>
+                <div class="music-selector">
+                    <span class="status-label">Sélection:</span>
+                    <select class="music-dropdown" [(ngModel)]="selectedMusic" (change)="onMusicChange()">
+                        <option value="music2.mp3">Défaut</option>
+                        <option *ngIf="ownsMinecraftMusic" value="minecraft.mp3">Minecraft</option>
+                    </select>
+                </div>
+                <div class="audio-control">
+                    <span class="status-label">Effets sonores:</span>
+                    <button class="volume-button" aria-label="Toggle sound effects" (click)="toggleSoundEffects()">
+                        <span class="material-icons" aria-hidden="true">
+                            {{ (audioService.soundEffectsEnabled$ | async) ? 'volume_up' : 'volume_off' }}
+                        </span>
+                    </button>
+                </div>
+            </div>
+            }
+        </div>
+
+        <div class="exit-button">
+            <button (click)="exitGame()">Quitter la partie</button>
+        </div>
+
+        @if (isHost) {
+
+        <div class="game-status">
+            <button
+                (mouseenter)="toggleHover(true)"
+                (mouseleave)="toggleHover(false)"
+                (click)="toggleGameLockState()"
+                [ngClass]="{ locked: isGameLocked, unlocked: !isGameLocked }"
+                [disabled]="isGameMaxed()"
+            >
+                {{ isGameLocked ? 'Fermée' : 'Ouverte' }}
+            </button>
+        </div>
+
+        @if (gameSettings.isFriendsOnly) {
+        <div class="invite-friends-section">
+            <button class="invite-friends-button" (click)="inviteAllOnlineFriends()">
+                <i class="fas fa-user-friends"></i>
+                Inviter tous mes amis en ligne
+            </button>
+        </div>
+        } } @else {
+        <div class="game-status">
+            <h2>La partie est</h2>
+            <h3>
+                {{ isGameLocked ? 'fermée' : 'ouverte' }}
+            </h3>
+        </div>
+        }
+        <div class="game">
+            <div class="game-details">
+                <div class="game-code">
+                    <p>Code:</p>
+                    <h1>{{ waitingRoomCode }}</h1>
+                </div>
+                <div class="game-map">
+                    <p>Carte:</p>
+                    <h1>{{ mapName }}</h1>
+                </div>
+                @if (gameSettings && gameSettings.entryFee > 0) {
+                <div class="entry-fee">
+                    <p>Frais d'entrée:</p>
+                    <h1>
+                        <img src="assets/icons/money.png" alt="Money" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px" />
+                        {{ gameSettings.entryFee }}
+                    </h1>
+                </div>
+                }
+            </div>
+            <div class="players-list">
+                <app-players-list
+                    [players]="activePlayers"
+                    [isHost]="isHost"
+                    [isGameMaxed]="isGameMaxed()"
+                    [isGameLocked]="isGameLocked"
+                    [openProfileModal]="openProfileModal.bind(this)"
+                    [gameId]="waitingRoomCode"
+                ></app-players-list>
+            </div>
+            @if(!isStartable){
+            <div class="player-waiting">
+                <div class="gear-animation">
+                    <img src="assets/gear.png" alt="Gear Animation" />
+                </div>
+                <h2>En attente...</h2>
+                <h1>{{ activePlayers.length }} / {{ maxPlayers }}</h1>
+            </div>
+            } @else { @if(isHost && isGameLocked) {
+            <div class="host-waiting">
+                <div class="button-container">
+                    <button (click)="startGame()">Commencer la partie</button>
+                </div>
+                <h1>{{ activePlayers.length }} / {{ maxPlayers }}</h1>
+            </div>
+
+            } @else {
+            <div class="player-waiting">
+                <div class="gear-animation">
+                    <img src="assets/gear.png" alt="Gear Animation" />
+                </div>
+                <h2>Vérouillez la salle pour commencer</h2>
+                <h1>{{ activePlayers.length }} / {{ maxPlayers }}</h1>
+            </div>
+            } } 
+        </div>
+        <button class="chat-toggle-button" aria-label="Toggle global chat" (click)="isChatVisible = !isChatVisible">
+            <span class="material-icons">chat_bubble_outline</span>
+        </button>
+        <div class="global-chat-wrapper" [hidden]="!isChatVisible">
+            <app-chatroom [gameId]="waitingRoomCode" [isInGame]="true" (closed)="isChatVisible = false"></app-chatroom>
+        </div>
+        @if(showExitModal) {
+        <div class="exit-modal">
+            <div class="modal">
+                <h2>{{ dialogBoxMessage }}</h2>
+                <p>Vous serez redirigé vers le menu principal.</p>
+            </div>
+        </div>
+        } @if (showProfileModal) {
+        <div class="profile-modal">
+            <div class="modal">
+                <app-profile-modal
+                    [gameId]="waitingRoomCode"
+                    [activePlayers]="activePlayers"
+                    [closeProfileModal]="closeProfileModal.bind(this)"
+                ></app-profile-modal>
+            </div>
+        </div>
+        }
+    </div>
+</body>

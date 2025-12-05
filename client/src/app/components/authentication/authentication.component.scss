@@ -1,0 +1,201 @@
+.auth-container {
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 2rem 2.5rem 1.5rem 2.5rem;
+    max-width: 350px;
+    margin: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.auth-container h2 {
+    margin: 1.2rem 0 0.7rem 0;
+    color: #2d3a4b;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.auth-container input {
+    display: block;
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 10px;
+    border: 1px solid #c3d0e0;
+    border-radius: 6px;
+    font-size: 1rem;
+    background: #f7fbff;
+    color: #2d3a4b;
+    transition: border 0.2s;
+}
+.auth-container input:focus {
+    border: 1.5px solid #4f8cff;
+    outline: none;
+}
+
+.auth-container button {
+    width: 100%;
+    padding: 0.7rem 0;
+    background: linear-gradient(90deg, #4f8cff 0%, #6edbff 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(79, 140, 255, 0.08);
+    transition:
+        background 0.2s,
+        transform 0.2s;
+}
+.auth-container button:hover {
+    background: linear-gradient(90deg, #357ae8 0%, #4fd1ff 100%);
+    transform: translateY(-2px) scale(1.03);
+}
+
+.auth-container .message {
+    margin-bottom: 16px;
+    color: #e53935;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.char-counter {
+    display: block;
+    text-align: right;
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-top: -8px;
+    margin-bottom: 12px;
+    padding-right: 0;
+    width: 100%;
+}
+
+.profile-picture-selection {
+    width: 100%;
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+.profile-picture-selection label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2d3a4b;
+}
+
+.avatar-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.avatar-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 8px rgba(79, 140, 255, 0.08);
+    cursor: pointer;
+    object-fit: cover;
+    background: #f7fbff;
+    transition:
+        border 0.2s,
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+.avatar-img.selected {
+    border: 2.5px solid #4f8cff;
+    box-shadow: 0 0 0 3px #b3d8ff;
+    transform: scale(1.08);
+    background: #e6f2ff;
+}
+
+.avatar-img:hover {
+    border: 2.5px solid #6edbff;
+    transform: scale(1.06);
+}
+
+.auth-flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 32px;
+    margin: 2rem auto;
+    max-width: 800px;
+    width: 100%;
+}
+
+.auth-container {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    padding: 2rem 2.5rem 1.5rem 2.5rem;
+    width: 350px;
+    min-width: 280px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 800px) {
+    .auth-flex-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+    }
+    .auth-container {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 2rem;
+    }
+}
+
+.password-input-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 12px;
+    display: block;
+    margin-right: 21px;
+}
+
+.password-input-container input {
+    margin-bottom: 0;
+    width: 100%;
+    display: block;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none !important;
+    border: none !important;
+    width: auto !important;
+    margin: 0 !important;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #000000 !important;
+    box-shadow: none !important;
+    transition: color 0.2s, transform 0.1s;
+    user-select: none;
+}
+
+.password-toggle:hover {
+    color: #4f8cff !important;
+    background: none !important;
+    transform: translateY(-50%) scale(1.1) !important;
+}
+
+.password-toggle:active {
+    color: #357ae8 !important;
+    transform: translateY(-50%) scale(0.95) !important;
+}

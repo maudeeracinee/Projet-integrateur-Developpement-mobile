@@ -1,0 +1,46 @@
+<div class="adminPage-container">
+    <div class="header">
+        <div class="header-buttons">
+            <button class="return-button" (click)="navigateToMain()">Retour</button>
+        </div>
+        <h2>Administration des jeux</h2>
+
+        <div class="header-buttons">
+            <button class="create-game-button" (click)="toggleGameCreationModalVisibility()">Nouveau jeu</button>
+        </div>
+    </div>
+
+    @if(isCreateMapModalVisible) {
+    <div class="modal-overlay">
+        <div class="modal">
+            <span class="close-button" (click)="onCloseModal()">×</span>
+            <app-map-choices-component (close)="onCloseModal()"></app-map-choices-component>
+        </div>
+    </div>
+    }
+    <button class="chat-toggle-button" aria-label="Toggle global chat" (click)="isChatVisible = !isChatVisible">
+        <span class="material-icons">chat_bubble_outline</span>
+    </button>
+    @if (isChatVisible) {
+    <div class="global-chat-wrapper">
+        <app-chatroom [isInGame]="false" (closed)="isChatVisible = false"></app-chatroom>
+    </div>
+    }
+    <app-error-message-component></app-error-message-component>
+
+    <div class="map-view">
+        <div class="scrollable-container">
+            @if (myMaps.length > 0) {
+            <div class="section-header">
+                <h3>Mes Jeux</h3>
+            </div>
+            <app-map-list [maps]="myMaps" [currentUsername]="currentUsername" (mapDuplicated)="scrollToTop()"> </app-map-list>
+            } @if (publicMaps.length > 0) {
+            <div class="section-header">
+                <h3>Jeux Publics</h3>
+            </div>
+            <app-map-list [maps]="publicMaps" [currentUsername]="currentUsername" (mapDuplicated)="scrollToTop()"> </app-map-list>
+            }
+        </div>
+    </div>
+</div>

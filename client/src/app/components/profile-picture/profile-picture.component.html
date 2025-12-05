@@ -1,0 +1,26 @@
+<div class="profile-picture-container">
+    <div class="profile-list">
+        <div *ngFor="let profile of profilePictures" class="profile-container" (click)="selectPredefinedProfile(profile.id)">
+            <img
+                [src]="profile.preview"
+                [alt]="'Profile ' + profile.id"
+                [class.selected]="isSelected(profile.id)"
+                [class.shop-profile]="profile.isShopProfile && isShopProfileOwned(profile)"
+                [class.shop-profile-locked]="profile.isShopProfile && !isShopProfileOwned(profile)"
+                [class.disabled]="!canSelectProfile(profile)"
+                class="profile-img"
+            />
+            <div *ngIf="profile.isShopProfile && !isShopProfileOwned(profile)" class="lock-overlay">
+                <span class="lock-icon">🔒</span>
+            </div>
+        </div>
+        <label class="profile-upload-label">
+            <input type="file" accept="image/*" (change)="onProfileFileSelected($event)" hidden />
+            <span class="profile-upload-btn">+</span>
+        </label>
+        <img *ngIf="customProfilePicturePreview" [src]="customProfilePicturePreview" alt="Aperçu profil personnalisé" class="profile-img selected" />
+    </div>
+    <div *ngIf="customProfilePicturePreview" class="custom-profile-reset">
+        <button type="button" (click)="removeCustomProfile()">Retirer l'image personnalisée</button>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="game-creation-page">
+    @if (map || isCreationPage) {
+    <div class="left-area">
+        <app-toolbar></app-toolbar>
+    </div>
+
+    <div class="center-area">
+        <app-map-area></app-map-area>
+    </div>
+
+    <div class="right-area">
+        <app-map-control-bar></app-map-control-bar>
+    </div>
+    <button class="chat-toggle-button" aria-label="Toggle global chat" (click)="isChatVisible = !isChatVisible">
+        <span class="material-icons">chat_bubble_outline</span>
+    </button>
+    @if (isChatVisible) {
+    <div class="global-chat-wrapper">
+        <app-chatroom [isInGame]="false" (closed)="isChatVisible = false"></app-chatroom>
+    </div>
+    }
+    }
+</div>

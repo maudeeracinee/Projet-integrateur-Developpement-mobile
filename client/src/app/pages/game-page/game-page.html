@@ -1,0 +1,158 @@
+@if(player && game){@if(!delayFinished) {
+<div class="popup-tour-overlay">
+    <div class="turn-indicator">
+        <h3>C'est au tour de {{currentPlayerTurn}}</h3>
+        <span class="countdown-timer" [ngClass]="{ 'pulse': isPulsing }">{{startTurnCountdown}}</span>
+    </div>
+</div>
+
+} @if(youFell) {
+<div class="popup-overlay">
+    <div class="turn-indicator"><h3>Vous êtes tombé, votre tour est fini.</h3></div>
+</div>
+
+}
+<div class="game-page-container" [ngClass]="{ 'observer-mode': player.isObserver }">
+    @if(!player.isObserver) {
+    <div class="game-info-panel">
+        <app-player-infos
+            [player]="player"
+            [currentPlayerTurn]="currentPlayerTurn"
+            (showExitModalChange)="onShowExitModalChange($event)"
+        ></app-player-infos>
+    </div>
+    }
+
+    <div class="game-map-container">
+        <app-game-map [player]="player" [loadedMap]="game" [moves]="moves" [isYourTurn]="isYourTurn" (tileClicked)="onTileClickToMove($event)">
+        </app-game-map>
+    </div>
+    <div class="top-right-panel">
+        <div class="countdown-endturn-container">
+            <div class="countdown-timer" [ngClass]="{ 'pulse': isPulsing }">
+                <div class="timer-circle">
+                    <svg viewBox="0 0 36 36">
+                        <circle class="background-circle" cx="18" cy="18" r="16"></circle>
+                        <circle
+                            class="progress-circle"
+                            cx="18"
+                            cy="18"
+                            r="16"
+                            [style.stroke-dashoffset]="dashOffset"
+                            [style.stroke-dasharray]="dashArray"
+                        ></circle>
+                    </svg>
+                    <div class="timer-text">
+                        <h3>{{ countdown }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-game-players-list
+            [players]="game.players"
+            [hostSocketId]="game.hostSocketId"
+            [currentPlayerTurn]="currentPlayerTurn"
+        ></app-game-players-list>
+    </div>
+</div>
+@if(!player.isObserver) {
+<div class="challenge-section">
+    <app-challenge></app-challenge>
+</div>
+}
+<div class="exit-button" (mouseenter)="showExitDescription = true" (mouseleave)="showExitDescription = false" (click)="openExitModal()">
+    @if(showExitDescription) {
+    <div class="exit-tooltip">Quitter la partie</div>
+    }
+    <img [src]="imageService.getIconImage('quit')" alt="Quitter la partie" />
+</div>
+<button class="chat-toggle-button" aria-label="Toggle global chat" (click)="isChatVisible = !isChatVisible">
+    <span class="material-icons">chat_bubble_outline</span>
+</button>
+<div class="global-chat-wrapper" [hidden]="!isChatVisible">
+    <app-chatroom [gameId]="this.game.id" [isInGame]="true" (closed)="isChatVisible = false"></app-chatroom>
+</div>
+@if(showExitModal) {
+<div class="open-exit-confirmation-modal">
+    <div class="popup-overlay">
+        <div class="modal">
+            <h2>Confirmer la sortie</h2>
+            <p>Êtes-vous sûr de vouloir quitter la partie ?</p>
+            <div class="modal-button-container">
+                <button class="modal-button" (click)="leaveGame()">Oui</button>
+                <button class="modal-button" (click)="closeExitModal()">Non</button>
+            </div>
+        </div>
+    </div>
+</div>
+} @if(showKickedModal) {
+<div class="game-finished-modal">
+    <div class="popup-overlay">
+        <div class="modal">
+            <h2>Tous les joueurs ont abandonné.</h2>
+            <p>La partie est finie, vous serez redirigé.</p>
+        </div>
+    </div>
+</div>
+} @if(showEndGameModal) {
+<div class="game-finished-modal">
+    <div class="popup-overlay">
+        <div class="modal">
+ <h2>{{ getEndGameMessage() }}</h2>
+            <p>La partie est finie, vous serez redirigé.</p>
+        </div>
+    </div>
+</div>
+} @if(isCombatModalOpen){
+<div class="combat-modal">
+    <div class="popup-overlay">
+        <app-combat-modal
+            [player]="(player.isEliminated === true || player.isObserver === true) ? combatPlayer : player"
+            [opponent]="opponent"
+            [isObserver]="player.isEliminated === true || player.isObserver === true"
+        >
+        </app-combat-modal>
+    </div>
+</div>
+} @if(isCombatOngoing) {
+<div class="combat-notification-overlay">
+    <div class="combat-notification">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span>⚔️ Combat en cours !</span>
+    </div>
+</div>
+} @if(isInventoryModalOpen) {
+<div class="inventory-modal">
+    <div class="popup-overlay">
+        <app-inventory-modal [player]="player" [gameId]="game.id"> </app-inventory-modal>
+    </div>
+</div>
+} @if(isEliminatedModalOpen) {
+<div class="observation-mode-modal">
+    <div class="popup-overlay">
+        <app-observation-mode-modal [message]="observationModeMessage" [closeModal]="closeObservationModeModal.bind(this)">
+        </app-observation-mode-modal>
+    </div>
+</div>
+} @if(showNoActivePlayersModal) {
+<div class="no-active-players-modal">
+    <div class="popup-overlay">
+        <div class="modal">
+            <h2>Partie Terminée</h2>
+            <p>Le dernier joueur actif a quitté la partie.</p>
+            <p>Vous serez redirigé vers la page de statistiques.</p>
+        </div>
+    </div>
+</div>
+} @if(showCombatResultModal) {
+<div class="combat-result-modal">
+    <div class="popup-overlay">
+        <div class="modal combat-result">
+            <h2>🏆 Résultat de Combat !</h2>
+            <p *ngIf="combatResult?.[1]"><strong>{{combatResult?.[0]?.name}}</strong> a évité le combat !</p>
+            <p *ngIf="!combatResult?.[1]"><strong>{{combatResult?.[0]?.name}}</strong> a remporté le combat !</p>
+            <button class="modal-button" (click)="closeCombatResultModal()">Continuer</button>
+        </div>
+    </div>
+</div>
+}}

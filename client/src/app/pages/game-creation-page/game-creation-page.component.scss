@@ -1,0 +1,68 @@
+.game-creation-page {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Press Start 2P', sans-serif;
+}
+
+.left-area {
+    width: 440px;
+    background-color: #1d1d1d;
+    height: 100%;
+}
+
+.center-area {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #3b3b3b;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.right-area {
+    width: 300px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border-left: 3px solid #202020;
+    background-color: #1c242c;
+    height: 100%;
+}
+
+.chat-toggle-button {
+    position: fixed;
+    top: 22px;
+    right: 22px;
+    z-index: 1200;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2c3e50;
+    border: 3px solid #202020;
+    color: #c0c0c0;
+    cursor: pointer;
+}
+
+.chat-toggle-button i {
+    font-size: 18px;
+}
+
+.global-chat-wrapper {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 25vw;
+    height: 100%;
+    max-height: 100vh;
+    background: linear-gradient(135deg, #3b3f46 30%, #282c34 100%);
+    border: 2px solid #b5651d;
+    border-top-left-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1500;
+    overflow: hidden;
+    transition: height 0.3s ease-in-out;
+}

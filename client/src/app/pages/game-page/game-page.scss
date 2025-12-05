@@ -1,0 +1,591 @@
+.game-page-container {
+    display: flex;
+    align-items: center;
+    background-image: url('../../../assets/backgrounds/backgroundcombat.png');
+    background-size: cover;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.game-page-container.observer-mode {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.game-info-panel {
+    height: 100vh;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.challenge-section {
+    position: fixed;
+    right: 10px;
+    bottom: 20px;
+    width: 20vw;
+    z-index: 10;
+}
+
+.exit-button {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    width: 4.5vw;
+    height: 4.5vw;
+    background-color: rgba(28, 36, 44, 0.8);
+    border: 2px solid #b85c38;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+    z-index: 1100; // Above combat modal (1000) to allow leaving during combat
+}
+
+.exit-button:hover {
+    transform: translateY(-0.5vw) scale(1.1);
+    border: 2px solid #f39c12;
+}
+
+.exit-button img {
+    width: 90%;
+    height: 90%;
+}
+
+.exit-tooltip {
+    position: absolute;
+    bottom: 110%;
+    left: 0;
+    background-color: #b85c38;
+    color: #fff;
+    padding: 0.5vw 1vw;
+    font-size: 0.9vw;
+    white-space: nowrap;
+    z-index: 10;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.exit-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 1vw;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #b85c38 transparent transparent transparent;
+}
+
+.game-map-container {
+    position: fixed;
+    top: 30px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    position: absolute;
+    right: 0;
+}
+
+.modal h2 {
+    margin-bottom: 20px;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #aa3d3d;
+    white-space: normal;
+    text-align: center;
+}
+
+.modal p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    white-space: normal;
+    overflow: visible;
+    color: #c0c0c0;
+    max-width: 550px;
+    word-wrap: break-word;
+    text-align: center;
+    min-height: 3em;
+    line-height: 1.5em;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal {
+    background-color: #1c242c;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 600px;
+    max-width: 90%;
+    max-height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 4px solid #7d7f7d;
+    position: relative;
+    z-index: 1000;
+}
+
+.open-exit-confirmation-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1200; // Above combat modal (1000) and exit button (1100)
+}
+
+.game-finished-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.no-active-players-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    color: #c0c0c0;
+    font-weight: bold;
+    background: none;
+    border: none;
+}
+
+.modal-button-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.modal-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #2c3e50;
+    border: 3px solid #202020;
+    color: white;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.modal-button:hover {
+    background-color: #3b3f46;
+}
+
+.disable-interactions {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 100%;
+    z-index: 1000;
+    pointer-events: all;
+}
+
+.game-players-list-mock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+    width: 330px;
+    height: 25vh;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    color: white;
+    background-color: #282c34;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.top-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: fixed;
+    top: 10px;
+    width: 100%;
+    color: #c0c0c0;
+    flex-direction: row;
+    gap: 15px;
+    z-index: 1;
+}
+
+.countdown-endturn-container {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    right: 50px;
+}
+
+// Top right panel for timer and player list
+.top-right-panel {
+    position: fixed;
+    top: 10px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 18px;
+}
+
+.countdown-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+}
+
+.countdown-container h2 {
+    margin: 0px;
+    font-size: 0.9em;
+}
+
+.countdown-container h3 {
+    margin: 5px;
+    font-size: 0.7em;
+}
+
+.countdown-timer {
+    font-size: 1.5em;
+    color: #f39c12;
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+.timer-circle {
+    position: relative;
+    width: 8vw;
+    height: 8vh;
+}
+
+.timer-circle svg {
+    transform: rotate(-90deg);
+    width: 100%;
+    height: 100%;
+}
+
+.background-circle {
+    fill: none;
+    stroke: #b85c38;
+    stroke-width: 1;
+}
+
+.progress-circle {
+    fill: none;
+    stroke: #f39c12;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    transition: stroke-dashoffset 0.1s linear;
+}
+
+.timer-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -48%);
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.pulse {
+    animation: pulseEffect 0.5s ease;
+}
+
+@keyframes pulseEffect {
+    0% {
+        transform: scale(1);
+        color: #c0c0c0;
+    }
+    50% {
+        transform: scale(1.05);
+        color: #f39c12;
+    }
+    100% {
+        transform: scale(1);
+        color: #f39c12;
+    }
+}
+
+.turn-indicator h3 {
+    color: #ffffff;
+}
+
+.hidden {
+    display: none;
+}
+
+.combat-modal {
+    z-index: 1000;
+
+    .popup-overlay {
+        pointer-events: none; // Allow clicks to pass through to exit button
+    }
+
+    app-combat-modal {
+        pointer-events: auto; // But capture clicks on the modal itself
+    }
+}
+
+.button:disabled {
+    background-color: #3b3b3b;
+    cursor: none;
+}
+
+.bottom-right-container {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 28vw;
+    height: 40vh;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.toggle-container {
+    display: flex;
+    justify-content: center;
+}
+
+.toggle-container button {
+    flex: 1;
+    height: 8vh;
+    font-size: 1rem;
+    color: #ffffff;
+    border: 2px solid #b85c38;
+    background-color: rgba(28, 36, 44, 0.8);
+    cursor: pointer;
+    text-align: center;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-container button.active {
+    background-color: rgba(28, 36, 44, 0.6);
+    color: #f39c12;
+}
+
+.toggle-container button:hover:not(.active) {
+    color: #f39c12;
+}
+
+.chat-and-journal-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    background-color: rgba(28, 36, 44, 0.8);
+    border-bottom: 2px solid #b85c38;
+    border-right: 2px solid #b85c38;
+    border-left: 2px solid #b85c38;
+}
+
+.chat-toggle-button {
+    position: fixed;
+    top: 22px;
+    right: 22px;
+    z-index: 1200;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2c3e50;
+    border: 3px solid #202020;
+    color: #c0c0c0;
+    cursor: pointer;
+}
+
+.chat-toggle-button i {
+    font-size: 18px;
+}
+
+.global-chat-wrapper {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 25vw;
+    height: 100%;
+    max-height: 100vh;
+    background: linear-gradient(135deg, #3b3f46 30%, #282c34 100%);
+    border: 2px solid #b5651d;
+    border-top-left-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1500;
+    overflow: hidden;
+    transition: height 0.3s ease-in-out;
+}
+
+.journal {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+}
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 12px;
+    font-family: 'Press Start 2P', sans-serif;
+    color: #ffffff;
+    background-color: transparent;
+    cursor: pointer;
+    text-align: center;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        background-color: rgba(28, 36, 44, 0.3);
+        color: #f39c12;
+    }
+
+    &:active {
+        box-shadow: none;
+        transform: translateY(4px);
+    }
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.popup-tour-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.turn-indicator {
+    position: fixed;
+    z-index: 1010;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
+    padding: 2%;
+    text-align: center;
+    width: 30vw;
+    max-width: 90%;
+    overflow: hidden;
+    color: #ffffff;
+    z-index: 1000;
+    background-color: rgba(44, 62, 80, 0.8);
+    border: 2px solid #f39c12;
+    border-radius: 0 40px 0 40px;
+}
+
+.combat-notification-overlay {
+    position: fixed;
+    top: 100px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 900;
+    pointer-events: none;
+}
+
+.combat-notification {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px;
+    background-color: #f57c00;
+    border-radius: 12px;
+    border: 2px solid #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+
+    i {
+        color: #ffffff;
+        font-size: 28px;
+    }
+
+    span {
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: bold;
+    }
+}

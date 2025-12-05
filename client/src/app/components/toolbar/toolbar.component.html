@@ -1,0 +1,157 @@
+<div class="toolbar">
+    <h2>Steam & Steel BattleGrounds</h2>
+    <div class="scrollable-sections">
+        <div class="toggle-section">
+            <h3>Tuiles</h3>
+            <button (click)="toggleTiles()">
+                {{ isTilesVisible ? '-' : '+' }}
+            </button>
+        </div>
+        @if(isTilesVisible) {
+        <div class="tile-section">
+            <div class="tile-grid">
+                <div class="tile" [ngClass]="{ selected: selectedTile === 'door' }" (click)="selectTile('door')">
+                    <img [src]="getTileImage('door')" alt="Door" />
+                    <span class="description" draggable="false">Ceci est une porte solide, fermée. Cliquez pour l'ouvrir ou la fermer.</span>
+                </div>
+                <div class="tile" [ngClass]="{ selected: selectedTile === 'wall' }" (click)="selectTile('wall')">
+                    <img [src]="getTileImage('wall')" alt="Wall" />
+                    <span class="description" draggable="false"
+                        >Un mur solide qui bloque les mouvements et la vision. Impossible de passer à travers.</span
+                    >
+                </div>
+                <div class="tile" [ngClass]="{ selected: selectedTile === 'ice' }" (click)="selectTile('ice')">
+                    <img [src]="getTileImage('ice')" alt="Ice" />
+                    <span class="description" draggable="false"
+                        >Glace glissante. Les joueurs qui marchent dessus peuvent glisser de manière incontrôlée.</span
+                    >
+                </div>
+                <div class="tile" [ngClass]="{ selected: selectedTile === 'water' }" (click)="selectTile('water')">
+                    <img [src]="getTileImage('water')" alt="Water" />
+                    <span class="description" draggable="false">Eau profonde qui ralentit les mouvements et peut restreindre certaines actions.</span>
+                </div>
+            </div>
+        </div>
+        }
+        <div class="toggle-section">
+            <h3>Objets</h3>
+            <button (click)="toggleItems()">
+                {{ isItemsVisible ? '-' : '+' }}
+            </button>
+        </div>
+        @if(isItemsVisible) {
+        <div class="item-section">
+            <div class="item-grid">
+                <div class="item" [class.disabled]="mapCounterService.isItemUsed(ItemCategory.Armor) || mapCounterService.itemsCounter === 0">
+                    <img
+                        [src]="getItemImage('armor')"
+                        alt="Armor"
+                        [draggable]="!mapCounterService.isItemUsed(ItemCategory.Armor) && mapCounterService.itemsCounter > 0"
+                        (dragstart)="startDrag($event, ItemCategory.Armor)"
+                    />
+                    <span class="description" draggable="false">{{ GameDescriptions.Armor }}</span>
+                </div>
+                <div class="item" [class.disabled]="mapCounterService.isItemUsed(ItemCategory.Sword) || mapCounterService.itemsCounter === 0">
+                    <img
+                        [src]="getItemImage('sword')"
+                        alt="Sword"
+                        [draggable]="!mapCounterService.isItemUsed(ItemCategory.Sword) && mapCounterService.itemsCounter > 0"
+                        (dragstart)="startDrag($event, ItemCategory.Sword)"
+                    />
+                    <span class="description" draggable="false">{{ GameDescriptions.Sword }}</span>
+                </div>
+                <div class="item" [class.disabled]="mapCounterService.isItemUsed(ItemCategory.IceSkates) || mapCounterService.itemsCounter === 0">
+                    <img
+                        [src]="getItemImage('iceskates')"
+                        alt="IceSkates"
+                        [draggable]="!mapCounterService.isItemUsed(ItemCategory.IceSkates) && mapCounterService.itemsCounter > 0"
+                        (dragstart)="startDrag($event, ItemCategory.IceSkates)"
+                    />
+                    <span class="description" draggable="false">{{ GameDescriptions.IceSkates }}</span>
+                </div>
+                <div class="item" [class.disabled]="mapCounterService.isItemUsed(ItemCategory.WallBreaker) || mapCounterService.itemsCounter === 0">
+                    <img
+                        [src]="getItemImage('wallbreaker')"
+                        alt="WallBreaker"
+                        [draggable]="!mapCounterService.isItemUsed(ItemCategory.WallBreaker) && mapCounterService.itemsCounter > 0"
+                        (dragstart)="startDrag($event, ItemCategory.WallBreaker)"
+                    />
+                    <span class="description" draggable="false">{{ GameDescriptions.WallBreaker }}</span>
+                </div>
+                <div class="item" [class.disabled]="mapCounterService.isItemUsed(ItemCategory.Amulet) || mapCounterService.itemsCounter === 0">
+                    <img
+                        [src]="getItemImage('amulet')"
+                        alt="Amulet"
+                        [draggable]="!mapCounterService.isItemUsed(ItemCategory.Amulet) && mapCounterService.itemsCounter > 0"
+                        (dragstart)="startDrag($event, ItemCategory.Amulet)"
+                    />
+                    <span class="description" draggable="false">{{ GameDescriptions.Amulet }}</span>
+                </div>
+                <div class="item" [class.disabled]="mapCounterService.isItemUsed(ItemCategory.Flask) || mapCounterService.itemsCounter === 0">
+                    <img
+                        [src]="getItemImage('flask')"
+                        alt="Flask"
+                        [draggable]="!mapCounterService.isItemUsed(ItemCategory.Flask) && mapCounterService.itemsCounter > 0"
+                        (dragstart)="startDrag($event, ItemCategory.Flask)"
+                    />
+                    <span class="description" draggable="false">{{ GameDescriptions.Flask }}</span>
+                </div>
+                <div class="item" [class.disabled]="mapCounterService.randomItemCounter === 0 || mapCounterService.itemsCounter === 0">
+                    <img
+                        [src]="getItemImage('random')"
+                        alt="RandomItem"
+                        [draggable]="mapCounterService.randomItemCounter > 0 && mapCounterService.itemsCounter > 0"
+                        (dragstart)="startDrag($event, ItemCategory.Random)"
+                    />
+                    <span class="description">{{ GameDescriptions.Random }}</span>
+                    <span class="counter" draggable="false">{{ mapCounterService.randomItemCounter }}</span>
+                </div>
+            </div>
+        </div>
+        }
+
+        <div class="toggle-section">
+            <h3>Point de départ</h3>
+            <button (click)="toggleStartingPoint()">
+                {{ isStartingPointVisible ? '-' : '+' }}
+            </button>
+        </div>
+        @if(isStartingPointVisible) {
+        <div class="starting-point-section">
+            <div class="tile" [class.disabled]="mapCounterService.startingPointCounter === 0">
+                <img
+                    [src]="getStartingPointImage()"
+                    alt="point de départ"
+                    [draggable]="mapCounterService.startingPointCounter > 0"
+                    (dragstart)="startDrag($event, ItemCategory.StartingPoint)"
+                    (dragover)="allowDrop($event)"
+                    (drop)="onDrop($event)"
+                />
+                <span class="description">Ceci est un point de départ où les joueurs commencent la partie.</span>
+                <span class="counter" draggable="false">{{ mapCounterService.startingPointCounter }}</span>
+            </div>
+        </div>
+    }
+        <div class="toggle-section" *ngIf="mode === 'ctf'">
+            <h3>Drapeau</h3>
+            <button (click)="toggleFlag()">
+                {{ isFlagVisible ? '-' : '+' }}
+            </button>
+        </div>
+        @if(isFlagVisible) {
+        <div class="flag-section" *ngIf="isFlagVisible && mode === 'ctf'">
+            <div class="item" (click)="selectItem('flag')" [class.disabled]="mapCounterService.isItemUsed(ItemCategory.Flag)">
+                <img
+                    src="./assets/items/flag.png"
+                    alt="drapeau"
+                    [draggable]="!mapCounterService.isItemUsed(ItemCategory.Flag)"
+                    (dragstart)="startDrag($event, ItemCategory.Flag)"
+                />
+                <span class="description"
+                    >Le drapeau en mode Capture du Drapeau. Capturez-le et ramenez le à votre case de départpour gagner la partie!</span
+                >
+            </div>
+        </div>
+        }
+    </div>
+</div>

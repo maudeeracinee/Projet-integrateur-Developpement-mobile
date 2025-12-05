@@ -1,0 +1,77 @@
+<div class="create-game-component">
+    <div class="return-to-previous-page">
+        <button class="return-button" (click)="onReturn()">Retour</button>
+    </div>
+    <div class="header">
+        <h2>CHOISIS TON JEU</h2>
+        <div class="user-money">
+            <app-virtual-money></app-virtual-money>
+        </div>
+    </div>
+
+    <button class="chat-toggle-button" aria-label="Toggle global chat" (click)="isChatVisible = !isChatVisible">
+        <span class="material-icons">chat_bubble_outline</span>
+    </button>
+    @if (isChatVisible) {
+    <div class="global-chat-wrapper">
+        <app-chatroom [isInGame]="false" (closed)="isChatVisible = false"></app-chatroom>
+    </div>
+    }
+    <div class="map-view">
+        <div class="scrollable-container">
+            <div class="filters-row">
+                <span class="filters-label">Filtrer par :</span>
+                <button class="filters-btn" [class.is-active]="sortBy === 'name'" (click)="toggleSort('name')">Nom</button>
+                <button class="filters-btn" [class.is-active]="sortBy === 'players'" (click)="toggleSort('players')">Nombre de joueurs</button>
+                <button class="filters-btn" [class.is-active]="sortBy === 'mode'" (click)="toggleSort('mode')">Mode</button>
+
+                <button class="order-btn" [disabled]="!sortBy" [class.disabled]="!sortBy" [class.is-active]="sortOrder === 'desc'" (click)="toggleOrder()" [attr.data-order]="sortOrder" aria-label="Asc/Desc">
+                <img
+                        [src]="sortOrder === 'asc' ? 'assets/icons/sort-asc.png' : 'assets/icons/sort-desc.png'"
+                        alt="Ordre de tri"
+                        width="24"
+                        height="24"
+                    />
+                </button>
+            </div>
+
+            <div class="map-cards">
+                @for(map of this.sortedMaps; track map.name) {
+                <div class="map-card" [ngClass]="{ selected: selectedMap === map.name }" (click)="selectMap(map.name)">
+                    <img [src]="map.imagePreview" alt="map-preview" class="map-img" />
+                    <div class="player-count-bar">
+                        <p>{{ getMapPlayers(map.mapSize.x) }}</p>
+                    </div>
+                    <div class="description-overlay">
+                        <p class="description">{{ map.description }}</p>
+                    </div>
+                    <div class="map-details">
+                        <h2 class="name">{{ map.name }}</h2>
+                        <p class="mode">Mode de jeu : {{ map.mode }}</p>
+                        <p class="size">Taille : {{ changeHeightMap(map.mapSize.x) }}</p>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    @if (showGameOptionsModal) {
+    <div class="game-options-modal">
+        <div class="modal">
+            <app-game-options-modal
+                [selectedMapName]="selectedMap || ''"
+                (closed)="closeGameOptionsModal()"
+                (next)="onGameOptionsNext($event)"
+            ></app-game-options-modal>
+        </div>
+    </div>
+    }
+    <div class="footer">
+        @if (showErrorMessage.userError) {
+        <div class="error-message">Aucun jeu selectionné. Sélectionnez un jeu.</div>
+        } @if (showErrorMessage.gameChoiceError) {
+        <div class="error-message">Le jeu n'est plus disponible.</div>
+        }
+    </div>
+</div>

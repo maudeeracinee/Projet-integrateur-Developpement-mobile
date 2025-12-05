@@ -1,0 +1,164 @@
+<div class="shop-modal-overlay" (click)="onOverlayClick($event)">
+    <div class="shop-container" (click)="$event.stopPropagation()">
+        <div class="shop-header">
+            <h1 class="shop-title">🏪 Boutique</h1>
+            <div class="header-actions">
+                <app-virtual-money [compact]="false"></app-virtual-money>
+                <button class="close-btn" (click)="closeShop()">×</button>
+            </div>
+        </div>
+
+        <div class="shop-content">
+            <div class="category-sidebar">
+                <h2 class="sidebar-title">Catégories</h2>
+                <div class="category-list">
+                    <button
+                        *ngFor="let category of categories"
+                        class="category-btn"
+                        [class.active]="selectedCategory === category.id"
+                        (click)="selectCategory(category.id)"
+                    >
+                        <span class="category-icon">{{ category.icon }}</span>
+                        <span class="category-name">{{ category.name }}</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="items-area">
+                <div class="category-header">
+                    <h2 class="category-title">{{ getCurrentCategory().name }}</h2>
+                    <div *ngIf="getCurrentCategory().id === 'characters'" class="info-icon-container">
+                        <span class="info-icon">ℹ️</span>
+                        <div class="custom-tooltip">
+                            <div class="tooltip-header">🎭 Personnages</div>
+                            <div class="tooltip-content">
+                                Personnalise ton identité ! Une fois acheté, ce personnage sera disponible comme personnage jouable en partie.
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="getCurrentCategory().id === 'profilePicture'" class="info-icon-container">
+                        <span class="info-icon">ℹ️</span>
+                        <div class="custom-tooltip">
+                            <div class="tooltip-header">📸 Photos de Profil</div>
+                            <div class="tooltip-content">
+                                Ces photos de profil uniques apparaîtront partout où ton identité est visible : dans les chats, la liste d'amis, et le
+                                compte. Montre qui tu es vraiment ! Si équipé, il deviendra automatiquement ta photo de profil.
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="getCurrentCategory().id === 'banner'" class="info-icon-container">
+                        <span class="info-icon">ℹ️</span>
+                        <div class="custom-tooltip">
+                            <div class="tooltip-header">✨ Bannières</div>
+                            <div class="tooltip-content">
+                                Affiche ton style ! Cette bannière décorative encadrera élégamment tes infos dans la salle d'attente, fin de partie et
+                                dans la liste d'amis. Tous les autres joueurs pourront admirer ton choix esthétique !
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="getCurrentCategory().id === 'sound'" class="info-icon-container">
+                        <span class="info-icon">ℹ️</span>
+                        <div class="custom-tooltip">
+                            <div class="tooltip-header">🔊 Musique</div>
+                            <div class="tooltip-content">
+                                Personnalise ton expérience sonore avec nos morceaux exclusifs ! Une fois achetée, la musique sera disponible pour
+                                être équipée dans les paramètres de compte. Aussi, les créateurs de parties pourront choisir la musique de fond pour
+                                leurs parties!
+                            </div>
+                        </div>
+                    </div>
+                    <span class="items-count">{{ getCurrentCategoryItems().length }} articles</span>
+                </div>
+
+                <div class="items-grid">
+                    <div
+                        *ngFor="let item of getCurrentCategoryItems()"
+                        class="item-card"
+                        [class.owned]="item.owned"
+                        [class.equipped]="item.equipped"
+                        [attr.data-category]="item.category"
+                    >
+                        <div class="item-image-container">
+                            <img
+                                [src]="item.imagePath"
+                                [alt]="item.name"
+                                [title]="item.description"
+                                class="item-image"
+                                [class.banner-image]="item.category === 'banner'"
+                                (error)="onImageError($event)"
+                            />
+                        </div>
+                        <div *ngIf="item.equipped" class="equipped-badge">✓ Équipé</div>
+
+                        <div *ngIf="item.owned && !item.equipped" class="owned-badge">✓ Possédé</div>
+
+                        <div class="item-info">
+                            <h3 class="item-name">{{ item.name }}</h3>
+
+                            <div class="item-footer">
+                                <div class="item-price" *ngIf="!item.owned">
+                                    <img src="assets/icons/money.png" alt="Pièces" class="coin-icon-small" />
+                                    <span class="price-value">{{ item.price }}</span>
+                                </div>
+
+                                <div class="item-actions">
+                                    <button
+                                        *ngIf="!item.owned"
+                                        class="action-btn buy-btn"
+                                        [disabled]="!canAfford(item) || (item.levelRequired && item.canPurchase === false)"
+                                        (click)="buyItem(item)"
+                                    >
+                                        <ng-container *ngIf="item.levelRequired && item.canPurchase === false; else checkChallenge">
+                                            <span>
+                                                <i class="fas fa-lock"></i> Niveau {{ item.levelRequired }} requis
+                                            </span>
+                                        </ng-container>
+
+                                        <ng-template #checkChallenge>
+                                            <ng-container *ngIf="item.ChallengeRequired && item.canPurchase === false; else checkFunds">
+                                                <span>
+                                                    <i class="fas fa-lock"></i> {{ item.ChallengeRequired }} Défis requis
+                                                </span>
+                                            </ng-container>
+                                        </ng-template>
+
+                                        <ng-template #checkFunds>
+                                            <span *ngIf="!canAfford(item)">Fonds insuffisants</span>
+                                        </ng-template>
+
+                                        <span
+                                            *ngIf="!(item.levelRequired && item.canPurchase === false) && !(item.ChallengeRequired && item.canPurchase === false) && canAfford(item)"
+                                            >Acheter</span
+                                        >
+                                    </button>
+
+                                    <button
+                                        *ngIf="item.owned && !item.equipped && item.category !== 'characters' && item.category !== 'sound'"
+                                        class="action-btn equip-btn"
+                                        (click)="equipItem(item)"
+                                    >
+                                        Équiper
+                                    </button>
+
+                                    <button
+                                        *ngIf="item.equipped && item.category !== 'characters' && item.category !== 'sound'"
+                                        class="action-btn unequip-btn"
+                                        (click)="unequipItem(item)"
+                                    >
+                                        Déséquiper
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="getCurrentCategoryItems().length === 0" class="no-items">
+                    <div class="no-items-icon">📦</div>
+                    <h3>Aucun article disponible</h3>
+                    <p>Cette catégorie sera bientôt remplie d'articles fantastiques !</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

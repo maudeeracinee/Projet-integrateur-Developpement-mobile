@@ -1,0 +1,195 @@
+.game-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 100%;
+    height: 525px;
+    padding: 1.6rem 0.6rem 0.6rem;
+    gap: 12px;
+    border: 2px solid #7d7f7d;
+    background-color: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    transition:
+        transform 0.3s,
+        border-color 0.3s;
+
+    &:hover {
+        border-color: #bdbdbd;
+        .gamemode-bar {
+            border-color: #bdbdbd;
+        }
+    }
+
+    &.is-locked {
+        border-color: #b71c1c;
+        box-shadow: 0 4px 12px rgba(183, 28, 28, 0.08), 0 4px 8px rgba(0,0,0,0.18);
+    }
+}
+
+.game-image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 ;
+    overflow: hidden;
+    border: 1px solid #202020;
+}
+
+.game-code-banner {
+    position: absolute;
+    top: 0;               /* 🔥 Collé au bord supérieur de la map */
+    left: 0;
+    width: 100%;          /* 🔥 Prend EXACTEMENT la largeur de la map */
+    padding: 6px 0;
+
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.9rem;
+    color: white;
+    text-align: center;
+
+    background: rgba(0, 0, 0, 0.75);
+    border-bottom: 2px solid #202020;  
+    border-radius: 0;                 
+    z-index: 50;
+    pointer-events: none;
+}
+
+.game-image-container .map-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.game-details {
+    color: #c0c0c0;
+    text-align: center;
+    padding: 0 4px;
+    flex: 1 1 auto;
+    transform: translateY(2px);
+
+    h2 {
+        font-size: 1.04rem;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .info {
+        font-size: 0.75rem;
+        margin: 6px 0;
+        font-style: italic;
+    }
+
+    .entry-fee-display {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        margin: 2px 0;
+        padding: 4px 8px;
+        background: linear-gradient(135deg, #ffd700, #ffed4e);
+        border-radius: 12px;
+        border: 1px solid #ffc107;
+    }
+
+    .money-icon-small {
+        width: 16px;
+        height: 16px;
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+    }
+
+    .fee-amount {
+        font-size: 0.7rem;
+        font-weight: bold;
+        color: #7d4f00;
+        text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+    }
+}
+
+
+.game-status-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    margin-top: -8px;
+    margin-bottom: -8px;
+    padding: 4px 10px;
+
+    font-size: 0.75rem;
+    text-transform: uppercase;
+
+    border-radius: 6px;
+    border: 1px solid #202020;
+}
+
+.game-status-bottom .status-dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+}
+
+/* Couleurs identiques à ton badge actuel */
+.game-status-bottom.is-waiting {
+    background: rgba(255, 152, 0, 0.15);
+    color:#4caf50;
+}
+.game-status-bottom.is-waiting .status-dot {
+    background-color: #4caf50;
+}
+
+.game-status-bottom.is-active {
+    background: rgba(76, 175, 80, 0.12);
+    color:#ff9800;
+}
+.game-status-bottom.is-active .status-dot {
+    background-color:#ff9800;
+}
+
+
+.join-actions {
+    margin-top: auto;
+    display: flex;
+    gap: 6px;
+
+    .join-button,
+    .full-button,
+    .observe-button,
+    .lock-button {
+        font-family: 'Press Start 2P', cursive;
+        font-size: 0.75rem;
+        flex: 1;
+        padding: 10px 12px;
+        border: 2px solid #202020;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .join-button {
+        background-color: #125719;
+    }
+    .observe-button {
+        background-color: #1c5276;
+    }
+    .lock-button {
+        background-color: #767676;
+    }
+    .full-button {
+        background-color: #5d1d14;
+    }
+
+    .join-button:hover {
+        background-color: #199027;
+    }
+    .observe-button:hover {
+        background-color: #2980b9;
+    }
+}

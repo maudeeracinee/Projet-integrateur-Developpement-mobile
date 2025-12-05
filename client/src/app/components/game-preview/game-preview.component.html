@@ -1,0 +1,42 @@
+<div class="game-card" [class.is-locked]="game.isLocked && !game.hasStarted">
+    <div class="game-code-banner">{{ game.id }}</div>
+    <div class="game-image-container">
+        <img [src]="game.imagePreview" alt="map-preview" class="map-img" />
+    </div>
+    <div class="game-details">
+        <h2 class="name">{{ game.name }}</h2>
+        <p class="info">Taille : {{ convertMapSize(game.mapSize.x) }}</p>
+        <p class="info">Joueurs : {{ activePlayers.length }} / {{ mapMaxPlayers }}</p>
+    </div>
+    <div class="game-status-bottom" [ngClass]="game.hasStarted ? 'is-active' : 'is-waiting'">
+        <span class="status-dot"></span>
+        <span class="status-label">
+            {{ game.hasStarted ? 'En cours' : 'En attente' }}
+        </span>
+    </div>
+    <div class="game-details">
+            @if (game.settings && game.settings.entryFee > 0) {
+        <div class="entry-fee-display">
+            <img src="assets/icons/money.png" class="money-icon-small" />
+            <span class="fee-amount">{{ game.settings.entryFee }} pièces</span>
+        </div>
+        }
+    </div>
+    <div class="join-actions">
+        @if (game.isLocked && !game.hasStarted) {
+        <button class="lock-button">Verrouillée</button>
+        }
+        @if (game.hasStarted) {
+        <button class="observe-button" (click)="onObserveClick()">Observer</button>
+        @if (game.settings.isDropInOut){ @if( wasInGameAsPlayer ){
+        <button class="join-button" (click)="onResumeClick()">Reprendre</button>
+        } @else if (isFull) {
+        <button class="full-button">Verrouillée</button>
+        } @else {
+        <button class="join-button" (click)="onJoinClick()">Jouer</button>
+        } }} @else if (!game.isLocked) {
+        <button class="join-button" (click)="onJoinClick()">Rejoindre</button>
+        }
+    </div>
+
+</div>
