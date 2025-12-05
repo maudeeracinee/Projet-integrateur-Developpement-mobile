@@ -45,6 +45,8 @@ Avec des aperçues visuelles
 ![Screenshot](/demo-images/C4.png)
 
 ## 🎮 Jeu
+### Rejoindre une partie
+![Screenshot](/demo-images/C16.png)
 ### Création de personnage
 ![Screenshot](/demo-images/C11.png)
 ### Salle d'attente
@@ -62,6 +64,7 @@ Avec des aperçues visuelles
 
 ## 🎯 Défis de partie
 - Gains de monnaie virtuelle suite a la complétion d'un défi lors d'une partie
+
 5 défis implémentés :
 1. Bouger 25 % des cases  
 2. Infliger 5 dommages  
@@ -116,7 +119,7 @@ Avec des aperçues visuelles
 ## ⭐ Système de niveau
 - Gagner 5 parties et augmenter d'un niveau
 - Niveau affiché dans la salle d’attente, la liste d’amis et le profil
-
+![Screenshot](/demo-images/C15.png)
 ---
 
 # 🧪 Technologies utilisées
