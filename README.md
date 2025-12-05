@@ -32,14 +32,14 @@ Avec des aperçues visuelles
 ![Screenshot](/demo-images/C8.png)
 
 ## ⚔️ Modes de jeu
-- Mode Classique
-- Mode Capture-the-Flag
+- Mode Classique: Les joueurs s’affrontent dans plusieurs duels successifs. Le premier joueur à remporter trois combats gagne la partie.
+- Mode Capture-the-Flag (CTF): Chaque joueur doit atteindre le drapeau placé sur la carte, le récupérer, puis retourner à son point de départ pour remporter la partie. Le premier joueur à compléter l’objectif gagne.
 - Filtre par mode de jeu, nombre de joueurs, alphabétique
 ![Screenshot](/demo-images/C3.png)
 
 ## ⚙️ Options de jeux
-- Élimination rapide
-- Drop in drop out
+- Élimination rapide: Raccourci du mode normal où une seule victoire en combat suffit : dès qu’un joueur remporte un combat, la partie se termine et il gagne immédiatement. Lorsqu’un joueur meurt et que la partie peut continuer, il passe automatiquement en mode observateur jusqu’à la fin du combat.
+- Drop in drop out: Permet aux joueurs de rejoindre ou quitter une partie en cours sans interrompre le déroulement du jeu ni affecter les autres joueurs.
 - Prix d’entrée
 - Amis seulement
 ![Screenshot](/demo-images/C4.png)
@@ -63,7 +63,7 @@ Avec des aperçues visuelles
 ![Screenshot](/demo-images/C10.png)
 
 ## 🎯 Défis de partie
-- Gains de monnaie virtuelle suite a la complétion d'un défi lors d'une partie
+- Le joueur peut obtenir de la monnaie virtuelle en complétant le défi assigné pour la partie. Le défi à réaliser est affiché dans la salle d’attente avant le début du jeu, puis indiqué à l’écran pendant la partie, se mettant à jour au fur et à mesure de la progression du joueur.
 
 5 défis implémentés :
 1. Bouger 25 % des cases  
@@ -76,9 +76,9 @@ Avec des aperçues visuelles
 - Fenêtre de chat intégrée en tout temps dans l’application
 - Messages horodatés, avatar + nom du joueur
 - Défilement complet + indicateur de nouveaux messages
-- C2Canal général
+- Canal général
 - Canal spécifique à chaque partie
-- Historique complet des messages
+- Historique complet des messages dans tous les canaux de discussions
 ![Screenshot](/demo-images/C2.png)
 
 ## 👤 Compte utilisateur & paramètres
@@ -95,7 +95,7 @@ Avec des aperçues visuelles
 ![Screenshot](/demo-images/C7.png)
 
 ## 📩 Invitations en temps réel
-- Un joueur peut inviter ses amis connectés
+- Un joueur peut inviter ses amis en ligne à rejoindre sa partie s'il a crée une partie avec l'option de jeu "Amis seulement".
 - Pop-up d’invitation avec "Accepter" / "Refuser"
 ![Screenshot](/demo-images/C9.png)
 
