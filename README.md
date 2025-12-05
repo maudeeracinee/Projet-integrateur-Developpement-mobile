@@ -45,6 +45,14 @@ Avec des aperçues visuelles
 ![Screenshot](/demo-images/C4.png)
 
 ## 🎮 Jeu
+### Création de personnage
+![Screenshot](/demo-images/C11.png)
+### Salle d'attente
+![Screenshot](/demo-images/C12.png)
+### Partie
+![Screenshot](/demo-images/C13.png)
+### Fin de partie
+![Screenshot](/demo-images/C14.png)
 
 ## 👁️ Mode Observateur
 - Rejoindre une partie sans interagir
@@ -61,7 +69,7 @@ Avec des aperçues visuelles
 4. Ouvrir 2 portes  
 5. Collecter 2 objets
 
-## 🗨️ Clavardage intégré et canuax de discussion
+## 🗨️ Clavardage intégré et canaux de discussion
 - Fenêtre de chat intégrée en tout temps dans l’application
 - Messages horodatés, avatar + nom du joueur
 - Défilement complet + indicateur de nouveaux messages
@@ -108,7 +116,7 @@ Avec des aperçues visuelles
 ## ⭐ Système de niveau
 - Gagner 5 parties et augmenter d'un niveau
 - Niveau affiché dans la salle d’attente, la liste d’amis et le profil
-- 
+
 ---
 
 # 🧪 Technologies utilisées
