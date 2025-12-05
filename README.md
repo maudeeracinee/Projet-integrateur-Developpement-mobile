@@ -160,11 +160,7 @@ Le serveur roule ensuite sur :
 http://localhost:3000
 ```
 ### 📦 Exécutable (mode release)
-Aucun déploiement infonuagique n’est inclus dans cette version GitHub.
-Le serveur peut toutefois être déployé sur AWS, Render, Railway, etc. en configurant :
-- un fichier .env
-- la connexion MongoDB
-- un service Node.js
+Aucun déploiement infonuagique n’est inclus dans cette version GitHub. Voir DEPLOYMENT.md pour l'implémenter.
 ## 🖥️ Client lourd (Angular)
 Le client lourd s’exécute localement via Angular et est accessible à l’adresse http://localhost:4200.
 ### ▶️ Exécution (mode développement)
