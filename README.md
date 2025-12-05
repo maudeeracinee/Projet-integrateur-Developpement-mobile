@@ -26,6 +26,40 @@ Steam & Steel Battlegrounds est une plateforme de jeu tactique multijoueur dans 
 ---
 
 # ⭐ Fonctionnalités implémentées (Client léger)
+Avec des aperçues visuelles
+
+## Menu principal
+![Screenshot](/demo-images/C8.png)
+
+## ⚔️ Modes de jeu
+- Mode Classique
+- Mode Capture-the-Flag
+- Filtre par mode de jeu, nombre de joueurs, alphabétique
+![Screenshot](/demo-images/C3.png)
+
+## ⚙️ Options de jeux
+- Élimination rapide
+- Drop in drop out
+- Prix d’entrée
+- Amis seulement
+![Screenshot](/demo-images/C4.png)
+
+## 🎮 Jeu
+
+## 👁️ Mode Observateur
+- Rejoindre une partie sans interagir
+- Icône “œil” pour distinguer les spectateurs
+- Chat disponible
+![Screenshot](/demo-images/C10.png)
+
+## 🎯 Défis de partie
+- Gains de monnaie virtuelle suite a la complétion d'un défi lors d'une partie
+5 défis implémentés :
+1. Bouger 25 % des cases  
+2. Infliger 5 dommages  
+3. Ne perdre aucune vie  
+4. Ouvrir 2 portes  
+5. Collecter 2 objets
 
 ## 🗨️ Clavardage intégré et canuax de discussion
 - Fenêtre de chat intégrée en tout temps dans l’application
@@ -44,18 +78,22 @@ Steam & Steel Battlegrounds est une plateforme de jeu tactique multijoueur dans 
 - Historique des connexions et des parties
 ![Screenshot](/demo-images/C1.png)
 
-## ⚔️ Modes de jeu
-- Mode Classique
-- Mode Capture-the-Flag
-- Filtre par mode de jeu, nombre de joueurs, alphabétique
-![Screenshot](/demo-images/C3.png)
+## 🫂 Système d’amis
+- Ajout / suppression d’amis
+- Recherche d’utilisateurs
+![Screenshot](/demo-images/C7.png)
 
-## Options de jeux
-- Élimination rapide
-- Drop in drop out
-- Prix d’entrée
-- Amis seulement
-![Screenshot](/demo-images/C4.png)
+## 📩 Invitations en temps réel
+- Un joueur peut inviter ses amis connectés
+- Pop-up d’invitation avec "Accepter" / "Refuser"
+![Screenshot](/demo-images/C9.png)
+
+## 🌐 Statut des amis
+- Affichage du statut des amis dans le chat, la liste d’amis et le compte
+- Statut possible:
+   🟢 En ligne
+   🟠 En jeu 
+   ⚪ Hors ligne
 
 ## 🛒 Boutique virtuelle
 - Dépenses
@@ -67,75 +105,10 @@ Steam & Steel Battlegrounds est une plateforme de jeu tactique multijoueur dans 
 - Persistant localement
 ![Screenshot](/demo-images/C6.png)
 
-## 🫂 Système d’amis
-- Ajout / suppression d’amis
-- Recherche d’utilisateurs
-![Screenshot](/demo-images/C7.png)
-
-## 🎯 Défis de partie
-- Gains de monnaie virtuelle suite a la complétion d'un défi lors d'une partie
-5 défis implémentés :
-1. Bouger 25 % des cases  
-2. Infliger 5 dommages  
-3. Ne perdre aucune vie  
-4. Ouvrir 2 portes  
-5. Collecter 2 objets
-
-## 🟢 Statut en ligne / hors ligne des amis
-- Affichage du statut dans :
-  - le chat
-  - la liste d’amis
-  - le profil utilisateur
-
-## 🛒 Boutique virtuelle
-- 5 bannières achetables
-- 5 avatars achetables
-- Intégration au système de monnaie virtuelle
-
 ## ⭐ Système de niveau
-- Gain d’XP via les défis  
-- Niveau affiché dans :
-  - la salle d’attente
-  - la liste d’amis
-  - le profil
-
-## 📩 Invitations en temps réel
-- Un joueur peut inviter ses amis connectés
-- Pop-up d’invitation avec "Accepter" / "Refuser"
-
-## 👁️ Mode Observateur
-- Rejoindre une partie sans interagir
-- Icône “œil” pour distinguer les spectateurs
-- Chat disponible
-
----
-
-# 📱 Aperçu visuel (captures à ajouter)
-
-## Menu principal
-*(Insérer capture)*
-
-## Profil utilisateur & avatar caméra
-*(Insérer capture)*
-
-## Liste d'amis & statut en ligne
-*(Insérer capture)*
-
-## Salle d’attente & invitations
-*(Insérer capture)*
-
-## Chat & canaux
-*(Insérer capture)*
-
-## Défis & niveaux
-*(Insérer capture)*
-
-## Boutique
-*(Insérer capture)*
-
-## Modes de jeu
-*(Insérer capture)*
-
+- Gagner 5 parties et augmenter d'un niveau
+- Niveau affiché dans la salle d’attente, la liste d’amis et le profil
+- 
 ---
 
 # 🧪 Technologies utilisées
