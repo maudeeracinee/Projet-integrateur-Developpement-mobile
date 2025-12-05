@@ -43,10 +43,13 @@ Steam & Steel Battlegrounds est une plateforme de jeu tactique multijoueur dans 
 - Statistiques : parties jouées, victoires, temps moyen
 - Historique des connexions et des parties
 ![Screenshot](/demo-images/C1.png)
+
 ## ⚔️ Modes de jeu
 - Mode Classique
 - Mode Capture-the-Flag
+- Filtre par mode de jeu, nombre de joueurs, alphabétique
 ![Screenshot](/demo-images/C3.png)
+
 ## Options de jeux
 - Élimination rapide
 - Drop in drop out
@@ -54,31 +57,29 @@ Steam & Steel Battlegrounds est une plateforme de jeu tactique multijoueur dans 
 - Amis seulement
 ![Screenshot](/demo-images/C4.png)
 
-## 💰 Système de monnaie virtuelle
-- Dépenses et gains
-- **Prix d’entrée** pour rejoindre certaines parties
+## 🛒 Boutique virtuelle
+- Dépenses
+- Possibilité d'acheter: des personnages, des photos de profil (avatars), des bannières et des musiques d'ambiance
+![Screenshot](/demo-images/C5.png)
 
 ## 🎨 Personnalisation de l’application
 - Thème visuel (clair / sombre)
 - Persistant localement
+![Screenshot](/demo-images/C6.png)
 
 ## 🫂 Système d’amis
 - Ajout / suppression d’amis
 - Recherche d’utilisateurs
-- **Création de parties “amis seulement”**
+![Screenshot](/demo-images/C7.png)
 
 ## 🎯 Défis de partie
+- Gains de monnaie virtuelle suite a la complétion d'un défi lors d'une partie
 5 défis implémentés :
 1. Bouger 25 % des cases  
 2. Infliger 5 dommages  
 3. Ne perdre aucune vie  
 4. Ouvrir 2 portes  
-5. Collecter 2 objets  
-
-## 🔍 Filtres de recherche de parties
-- Filtre par mode de jeu  
-- Filtre par nombre de joueurs  
-- Filtre alphabétique
+5. Collecter 2 objets
 
 ## 🟢 Statut en ligne / hors ligne des amis
 - Affichage du statut dans :
@@ -160,23 +161,55 @@ Steam & Steel Battlegrounds est une plateforme de jeu tactique multijoueur dans 
 
 ---
 
-# 🚀 Exécution du projet
-
+# 🚀 Exécution et génération des exécutables
 ## Serveur
+Dans le cadre du projet LOG3900, le serveur était déployé via GitLab CI/CD et hébergé sur AWS.  
+Cette version GitHub n’est pas connectée à AWS ; le serveur doit donc être exécuté localement.
+### ▶️ Exécution (mode développement)
 ```bash
 cd server
 npm install
 npm start
 ```
+Le serveur roule ensuite sur :
+```bash
+http://localhost:3000
+```
+### 📦 Exécutable (mode release)
+Aucun déploiement infonuagique n’est inclus dans cette version GitHub.
+Le serveur peut toutefois être déployé sur AWS, Render, Railway, etc. en configurant :
+- un fichier .env
+- la connexion MongoDB
+- un service Node.js
 ## 🖥️ Client lourd (Angular)
+Le client lourd s’exécute localement via Angular et est accessible à l’adresse http://localhost:4200.
+### ▶️ Exécution (mode développement)
 ```bash
 cd client
 npm install
 npm start
 ```
+### 📦 Exécutable (mode release)
+Pour générer l’exécutable desktop :
+```bash
+npm run start:electron
+```
+L’exécutable sera produit dans le dossier de build configuré (ex.: dist/, out/).
 ## 📱 Client léger (Flutter / Android)
+Pour pouvoir l’exécuter en mode développement ou tester l’APK généré en mode release,  
+vous devez disposer d’un **émulateur Android** ou d’un **appareil Android réel**.
+### ▶️ Exécution (mode développement)
 ```bash
 cd mobile
 flutter pub get
 flutter run
+```
+### 📦 Exécutable (mode release)
+Pour générer le fichier APK final :
+```bash
+flutter build apk --release
+```
+L’APK se retrouve ici :
+```bash
+mobile/build/app/outputs/flutter-apk/app-release.apk
 ```
